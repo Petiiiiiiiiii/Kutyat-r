@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="KutyaTar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <title>Kutyatár</title>
+
+    <style>
+        .container
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        th
+        {
+            font-size: 20px;
+        }
+        table tr td
+        {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body ng-controller="KutyaTarController">
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>Név</th>
+                <th>Fajta</th>
+                <th>Életkor</th>
+                <th>Utolsó orvosi ellenőrzés</th>
+            </tr>
+            <tr ng-repeat="kutya in kutyak">
+                <td>{{kutya['név']}}</td>
+                <td>{{kutya['fajta']}}</td>
+                <td>{{kutya['életkor']}}</td>
+                <td>{{kutya['utolsó orvosi ellenőrzés']}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <script>
+        let app = angular.module("KutyaTar",[]);
+        app.controller("KutyaTarController", function($scope, $http)
+        {
+            $scope.kutyak = [];
+            $http.get('kutyak/kutyak.json')
+                .then(function(response){
+                    $scope.kutyak = response.data;
+                    console.log($scope.kutyak);
+                })
+        })
+    </script>
+</body>
+</html>
